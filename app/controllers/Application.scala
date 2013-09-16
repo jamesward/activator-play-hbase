@@ -23,7 +23,6 @@ object Application extends Controller {
     if (!hbaseAdmin.tableExists(barsTableName)) {
       val desc = new HTableDescriptor(barsTableName)
       desc.addFamily(new HColumnDescriptor(family))
-      desc.addFamily(new HColumnDescriptor(qualifier))
       hbaseAdmin.createTable(desc)
       Logger.info("bars table created")
     }
@@ -59,6 +58,7 @@ object Application extends Controller {
     } finally {
       scanner.close()
     }
+    table.close()
     Ok(Json.toJson(results))
   }
 
