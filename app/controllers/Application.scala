@@ -57,8 +57,8 @@ object Application extends Controller {
       }
     } finally {
       scanner.close()
+      table.close()
     }
-    table.close()
     Ok(Json.toJson(results))
   }
 
