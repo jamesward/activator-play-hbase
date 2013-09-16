@@ -42,6 +42,7 @@ object Application extends Controller {
     val put = new Put(Bytes.toBytes(UUID.randomUUID().toString))
     put.add(family, qualifier, Bytes.toBytes(request.body.toString()))
     table.put(put)
+    table.close()
     Ok
   }
   

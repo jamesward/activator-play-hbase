@@ -1,35 +1,66 @@
 <html>
 <head>
-    <title>Play Framework + ExtJS - Activator Template</title>
+    <title>Play Framework + HBase - Activator Template</title>
 </head>
 <body>
 <div>
-    <p>You've just created a simple Play Framework application! Now lets explore the code.</p>
 
-    <h2>View the App</h2>
-http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/4.2.0/CDH4-Installation-Guide/cdh4ig_topic_20_4.html
+    <h2>Setup HBase</h2>
+    
+    <p>
+        You've just created a simple Play Framework + HBase application!  Before we dive into the code and run the app you will need to install and start HBase on your system.  <a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/4.2.0/CDH4-Installation-Guide/cdh4ig_topic_4_4.html" target="_blank">First setup the CDH4 repository</a>, then <a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/4.2.0/CDH4-Installation-Guide/cdh4ig_topic_20_4.html" target="_blank">Install HBase</a>, and <a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/4.2.0/CDH4-Installation-Guide/cdh4ig_topic_20_4.html" target="_blank">Start HBase in Standalone mode</a>.
+    </p>
+    
+    <p>
+        Verify that HBase has started by running:
+        <pre><code>hbase shell</code></pre>
+    
+        You should see something like:
+        <pre><code>HBase Shell; enter 'help&lt;RETURN&gt;' for list of supported commands.
+Type "exit&lt;RETURN&gt;" to leave the HBase Shell
+Version 0.94.6-cdh4.4.0, rUnknown, Tue Sep  3 20:11:37 PDT 2013
+
+hbase(main):001:0&gt;</code></pre>
+    </p>
+    
+</div>
+
+<div>
+    <h2>Run the App</h2>
+
     <p>
         Once the application has been compiled and the server started, your application can be accessed at: <a href="http://localhost:9000" target="_blank">http://localhost:9000</a><br/>
-        Check in <a href="#run" class="shortcut">Run</a> to see the server status.<br/>
-        When you make an HTTP request to that URL, the Play server figures out what code to execute which will handle the request and return a response.  In this application the request handler for requests to the root URL (e.g. "/") are handled by a Java Controller.  You can use Java and Scala to create your controllers.
+        Check in <a href="#run" class="shortcut">Run</a> to see the server status.
+    </p>
+    
+    <p>
+        The app has a simple web UI for listing and displaying "bars".  Try to add a new "bar".  Once added it should be displayed in the list.
     </p>
 </div>
 <div>
     <h2>Code Overview</h2>
 
     <p>
-        <!-- todo -->
+        Opening <a href="http://localhost:9000" target="_blank">http://localhost:9000</a> in your browser renders a web page by first looking up the routing in the <a href="#code/conf/routes" class="shortcut">conf/routes</a> file.  A <code>GET</code> handler for <code>/</code> calls the <code>index</code> method in <a href="#code/app/Application.scala" class="shortcut">app/Application.scala</a> file.  This method renders a webpage using the <a href="#code/app/views/index.scala.html" class="shortcut">app/views/index.scala.html</a> server-side template.  That webpage loads in the UI for the application which uses <a href="http://jquery.com" target="_blank">jQuery</a> and <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>.  The main UI is driven through JavaScript which is compiled from the <a href="#code/app/assets/javascripts/index.coffee" class="shortcut">index.coffee</a> source file.  That file handles making RESTful JSON requests to get the list of "bars" and add a new "bar".
     </p>
     
-    <!--
-    <p>A Play application has very few required files.  This example tries to illustrate a number of key concepts in Play so it has a handful of files to explain.  The <a href="#code/app" class="shortcut">app</a> directory contains the application's source code, including Java, Scala, server-side templates, and server-side compiled assets for the browser (e.g. JavaScript, CoffeeScript, LESS).  The <a href="#code/conf" class="shortcut">conf</a> directory contains the <a href="#code/conf/application.conf" class="shortcut">application.conf</a> config file and the <a href="#code/conf/routes" class="shortcut">routes</a> file</a>.  The <a href="#code/project" class="shortcut">project</a> directory contains the SBT build information for the app.  The default place for static assets (e.g. images, HTML, CSS, JavaScript) is the <a href="#code/public" class="shortcut">public</a> directory.  Unit, functional, and integration tests (Java and Scala) go in the <a href="#code/test" class="shortcut">test</a> directory.</p>
-    -->
+    <p>
+        In the <a href="#code/app/Application.scala" class="shortcut">Application.scala</a> file, there is a <code>lazy val hbaseConfig</code> which configures the connection to HBase and if needed creates the table to store the "bars" in.  The <code>addBar()</code> method adds a new row consisting of the JSON from the client.  The <code>getBars</code> method queries the table for "bars" and then transforms them into a JSON list and returns them.  You can see the JSON directly at: <a href="http://localhost:9000/bars" target="_blank">http://localhost:9000/bars</a>
+    </p>
+    
+    <p>
+        The application dependencies are defined in the <a href="#code/build.sbt" class="shortcut">build.sbt</a> file.
+    </p>
 </div>
 <div>
     <h2>Further Learning</h2>
 
     <p>
-        <!-- todo -->
+        To learn more about Play Framework, try out the <a href="http://typesafe.com/activator/template/hello-play" target="_blank">hello-play</a> template in Activator.  (Hint: Click the Typesafe logo in the top-right to go create a new app.)<br/>
+        <br/>
+        Learn more about Play Framework: <a href="http://playframework.com/" target="_blank">http://playframework.com</a><br/>
+        <br/>
+        Learn more about Apache HBase: <a href="http://hbase.apache.org/" target="_blank">http://hbase.apache.org/</a>
     </p>
 </div>
 </body>

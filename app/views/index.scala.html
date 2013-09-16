@@ -1,18 +1,34 @@
 @(title: String)
+<!DOCTYPE html>
 
-@main(title) {
-    
+<html>
+<head>
+    <title>@title</title>
+    <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
+    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'>
+    <link rel='stylesheet' href='@routes.Assets.at("stylesheets/index.css")'>
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
-    
-    <div class="well">
-        <h3>Bars</h3>
-        <ul id="bars"></ul>
-        <hr>
-        <h3>Add a Bar</h3>
-        <form id="addBar" action="@routes.Application.addBar()" method="post">
-            <input id="barName" placeholder="Name">
-            <button>Add Bar</button>
-        </form>
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a id="titleLink" class="brand" href="/">@title</a>
+            </div>
+        </div>
     </div>
-
-}
+    <div class="container">
+        <div class="well">
+            <h3>Bars</h3>
+            <ul id="bars"></ul>
+            <hr>
+            <h3>Add a Bar</h3>
+            <form id="addBar" action="@routes.Application.addBar()" method="post">
+                <input id="barName" placeholder="Name">
+                <button>Add Bar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
